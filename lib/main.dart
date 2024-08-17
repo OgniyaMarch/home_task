@@ -1,29 +1,28 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
-import 'package:training_app_for_weekend/isar_service.dart';
+import 'package:training_app_for_weekend/bloc/people_filter_bloc.dart';
+import 'package:training_app_for_weekend/models/user.dart';
 import 'package:training_app_for_weekend/screen.dart';
-
-import 'models/user_names.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final List<User> users = User.generateUsers(1000);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return BlocProvider<PeopleFilterBloc>(
+      create: (BuildContext context) => PeopleFilterBloc(users),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: Screen(),
       ),
-      home: Screen(),
     );
   }
 }

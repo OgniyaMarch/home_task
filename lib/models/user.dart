@@ -1,11 +1,22 @@
-import 'package:isar/isar.dart';
+import 'dart:math';
 
-part 'user.g.dart';
+import 'package:training_app_for_weekend/models/user_names.dart';
 
-@collection
 class User {
-  Id id = Isar.autoIncrement;
+  User({
+    required this.name,
+    required this.age,
+  });
 
-  String? name;
-  int? age;
+  String name;
+  int age;
+
+  static List<User> generateUsers(int count) {
+    Random random = Random();
+    return List.generate(count, (index) {
+      String userName = UserNames.values[random.nextInt(10)].userName;
+      int userAge = random.nextInt(100) + 1;
+      return User(name: userName, age: userAge);
+    });
+  }
 }
